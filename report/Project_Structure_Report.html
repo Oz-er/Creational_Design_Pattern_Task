@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Online Examination Subsystem Project Structure Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.45;
+            color: #222;
+            margin: 42px;
+        }
+
+        h1 {
+            font-size: 26px;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 19px;
+            margin-top: 26px;
+            border-bottom: 1px solid #999;
+            padding-bottom: 4px;
+        }
+
+        h3 {
+            font-size: 16px;
+            margin-top: 18px;
+        }
+
+        p {
+            margin: 7px 0;
+        }
+
+        ul {
+            margin-top: 6px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            font-family: "DejaVu Sans Mono", monospace;
+            font-size: 90%;
+            background: #f2f2f2;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0 16px;
+            font-size: 13px;
+        }
+
+        th, td {
+            border: 1px solid #999;
+            padding: 7px;
+            vertical-align: top;
+        }
+
+        th {
+            background: #eeeeee;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 26px;
+            color: #444;
+        }
+
+        .path {
+            font-family: "DejaVu Sans Mono", monospace;
+            font-size: 12px;
+            background: #f7f7f7;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Online Examination Subsystem</h1>
+    <p class="subtitle">Project Structure Report for Creational Design Patterns Assignment</p>
+
+    <h2>1. Project Overview</h2>
+    <p>
+        This project implements an Online Examination Subsystem using multiple creational design
+        patterns. The implementation is organized into separate packages for each assignment part:
+        Factory Method, Abstract Factory, Builder, and Question Sourcing Integration.
+    </p>
+    <p class="path">
+        Project root: Creational_Design_Pattern_Task/Attempt_1/src
+    </p>
+
+    <h2>2. High-Level Package Structure</h2>
+    <table>
+        <tr>
+            <th>Package</th>
+            <th>Purpose</th>
+            <th>Main Responsibility</th>
+        </tr>
+        <tr>
+            <td><code>Part_A</code></td>
+            <td>Factory Method Pattern</td>
+            <td>Creates different exam formats such as Practice Quiz, Midterm Exam, and Final Exam.</td>
+        </tr>
+        <tr>
+            <td><code>Part_B</code></td>
+            <td>Abstract Factory Pattern</td>
+            <td>Creates families of question-related objects: question entity, renderer, and evaluator.</td>
+        </tr>
+        <tr>
+            <td><code>Part_C</code></td>
+            <td>Builder Pattern</td>
+            <td>Builds flexible exam configuration objects through chained builder methods.</td>
+        </tr>
+        <tr>
+            <td><code>Part_D</code></td>
+            <td>Question Sourcing Integration</td>
+            <td>Supplies questions from manual, question bank, or faker generation strategies.</td>
+        </tr>
+        <tr>
+            <td><code>Main.java</code></td>
+            <td>Central Driver</td>
+            <td>Combines all packages and prints the final dashboard output.</td>
+        </tr>
+    </table>
+
+    <h2>3. Part A: Exam Provisioning</h2>
+    <p>
+        Part A defines the exam creation subsystem. It separates the client code from the concrete
+        exam classes. The client asks an exam factory for an exam, and the selected concrete factory
+        decides which exam object to instantiate.
+    </p>
+
+    <h3>Important Classes</h3>
+    <table>
+        <tr>
+            <th>Class / Interface</th>
+            <th>Role</th>
+        </tr>
+        <tr>
+            <td><code>Exam</code></td>
+            <td>Common interface for all exam products. It defines <code>getType()</code> and <code>displayInfo()</code>.</td>
+        </tr>
+        <tr>
+            <td><code>ExamFactory</code></td>
+            <td>Abstract creator. It declares <code>createExam()</code>.</td>
+        </tr>
+        <tr>
+            <td><code>PracticeQuiz</code>, <code>MidtermExam</code>, <code>FinalExam</code></td>
+            <td>Concrete exam products.</td>
+        </tr>
+        <tr>
+            <td><code>PracticeQuizFactory</code>, <code>MidtermExamFactory</code>, <code>FinalExamFactory</code></td>
+            <td>Concrete factories that create specific exam objects.</td>
+        </tr>
+    </table>
+
+    <h2>4. Part B: Question Subsystem</h2>
+    <p>
+        Part B models each question type as a family of related objects. A question is not only text:
+        it also has a renderer for display and an evaluator for grading. The package supports MCQ,
+        True/False, Essay, and Programming question families.
+    </p>
+
+    <h3>Core Interfaces</h3>
+    <table>
+        <tr>
+            <th>Interface</th>
+            <th>Responsibility</th>
+        </tr>
+        <tr>
+            <td><code>Question</code></td>
+            <td>Represents question data such as type, text, points, and difficulty.</td>
+        </tr>
+        <tr>
+            <td><code>QuestionRenderer</code></td>
+            <td>Displays a question in a clean console format.</td>
+        </tr>
+        <tr>
+            <td><code>QuestionEvaluator</code></td>
+            <td>Evaluates a submitted answer and returns the score.</td>
+        </tr>
+        <tr>
+            <td><code>QuestionFactory</code></td>
+            <td>Abstract factory interface. It creates a question, renderer, and evaluator.</td>
+        </tr>
+    </table>
+
+    <h3>Concrete Families</h3>
+    <table>
+        <tr>
+            <th>Family</th>
+            <th>Question</th>
+            <th>Renderer</th>
+            <th>Evaluator</th>
+            <th>Factory</th>
+        </tr>
+        <tr>
+            <td>MCQ</td>
+            <td><code>MCQQuestion</code></td>
+            <td><code>MCQRenderer</code></td>
+            <td><code>MCQEvaluator</code></td>
+            <td><code>MCQFactory</code></td>
+        </tr>
+        <tr>
+            <td>True/False</td>
+            <td><code>TrueFalseQuestion</code></td>
+            <td><code>TrueFalseRenderer</code></td>
+            <td><code>TrueFalseEvaluator</code></td>
+            <td><code>TrueFalseFactory</code></td>
+        </tr>
+        <tr>
+            <td>Essay</td>
+            <td><code>EssayQuestion</code></td>
+            <td><code>EssayRenderer</code></td>
+            <td><code>EssayEvaluator</code></td>
+            <td><code>EssayFactory</code></td>
+        </tr>
+        <tr>
+            <td>Programming</td>
+            <td><code>ProgrammingQuestion</code></td>
+            <td><code>ProgrammingRenderer</code></td>
+            <td><code>ProgrammingEvaluator</code></td>
+            <td><code>ProgrammingFactory</code></td>
+        </tr>
+    </table>
+
+    <p>
+        <code>BaseQuestion</code> is a helper abstract class that stores common question fields:
+        text, points, and difficulty. It reduces repeated code across concrete question classes.
+    </p>
+
+    <h2>5. Part C: Exam Configuration Builder</h2>
+    <p>
+        Part C handles exam configuration. Instead of using a long constructor with many parameters,
+        the project uses a builder with chained methods. This makes exam setup readable and flexible.
+    </p>
+
+    <h3>Important Classes</h3>
+    <table>
+        <tr>
+            <th>Class</th>
+            <th>Responsibility</th>
+        </tr>
+        <tr>
+            <td><code>ExamConfiguration</code></td>
+            <td>Final immutable configuration object. It stores title, duration, passing score, negative marking, shuffle, auto-submit, and calculator settings.</td>
+        </tr>
+        <tr>
+            <td><code>ExamBuilder</code></td>
+            <td>Builds an <code>ExamConfiguration</code> step by step using chained methods such as <code>setTitle()</code>, <code>setDuration()</code>, and <code>enableAutoSubmit()</code>.</td>
+        </tr>
+    </table>
+
+    <h3>Builder Usage Example</h3>
+    <p>
+        The final driver uses chained calls to build the exam configuration:
+    </p>
+    <p class="path">
+        new ExamBuilder().setTitle("OOP Midterm Exam").setDuration(60).setPassingScore(50).enableNegativeMarking().enableQuestionShuffle().disableCalculator().enableAutoSubmit().build();
+    </p>
+
+    <h2>6. Part D: Question Sourcing Integration</h2>
+    <p>
+        Part D decouples question creation from the source of question data. The question factories
+        can receive a <code>QuestionSource</code> through dependency injection. This allows the same
+        factory to create questions from different sources.
+    </p>
+
+    <h3>Important Classes</h3>
+    <table>
+        <tr>
+            <th>Class / Interface</th>
+            <th>Responsibility</th>
+        </tr>
+        <tr>
+            <td><code>QuestionSource</code></td>
+            <td>Common interface for all question sourcing strategies. It defines <code>getQuestion()</code> and <code>getSourceName()</code>.</td>
+        </tr>
+        <tr>
+            <td><code>BankQuestionSource</code></td>
+            <td>Fetches questions from <code>QuestionBank</code>.</td>
+        </tr>
+        <tr>
+            <td><code>FakerQuestionSource</code></td>
+            <td>Generates mock questions using <code>QuestionFaker</code>.</td>
+        </tr>
+        <tr>
+            <td><code>ManualQuestionSource</code></td>
+            <td>Wraps a manually provided question. This supports the manual mode requirement.</td>
+        </tr>
+        <tr>
+            <td><code>QuestionBank</code></td>
+            <td>Stores predefined questions and returns a pseudo-random question by type.</td>
+        </tr>
+        <tr>
+            <td><code>QuestionFaker</code></td>
+            <td>Creates simulated academic questions at runtime.</td>
+        </tr>
+    </table>
+
+    <h2>7. Central Execution Flow</h2>
+    <p>
+        The root <code>Main.java</code> is the final orchestration driver. It performs the assignment
+        workflow in this order:
+    </p>
+    <ol>
+        <li>Selects an <code>ExamFactory</code>, currently <code>MidtermExamFactory</code>.</li>
+        <li>Creates the exam using Factory Method.</li>
+        <li>Creates a <code>QuestionBank</code> and several <code>BankQuestionSource</code> objects.</li>
+        <li>Injects the sources into the concrete question factories.</li>
+        <li>Builds the runtime exam configuration using <code>ExamBuilder</code>.</li>
+        <li>Creates the final question list.</li>
+        <li>Prints a dashboard containing the exam type, configuration, sourcing strategy, and question components.</li>
+    </ol>
+
+    <h2>8. How the Project Follows the Required Patterns</h2>
+
+    <h3>8.1 Factory Method Pattern: Part A</h3>
+    <p>
+        Factory Method is followed because <code>ExamFactory</code> declares the creation method
+        <code>createExam()</code>, while each subclass decides which concrete exam to instantiate.
+        For example, <code>MidtermExamFactory</code> creates a <code>MidtermExam</code>, and
+        <code>FinalExamFactory</code> creates a <code>FinalExam</code>. The client depends on
+        <code>ExamFactory</code> and <code>Exam</code>, not on direct constructor calls for every exam type.
+    </p>
+
+    <h3>8.2 Abstract Factory Pattern: Part B</h3>
+    <p>
+        Abstract Factory is followed because <code>QuestionFactory</code> creates a family of related
+        products: <code>Question</code>, <code>QuestionRenderer</code>, and <code>QuestionEvaluator</code>.
+        Each concrete factory produces compatible objects from the same family. For example,
+        <code>MCQFactory</code> creates an MCQ question, MCQ renderer, and MCQ evaluator, while
+        <code>EssayFactory</code> creates the Essay versions of those same roles.
+    </p>
+
+    <h3>8.3 Builder Pattern: Part C</h3>
+    <p>
+        Builder is followed because <code>ExamBuilder</code> constructs a complex
+        <code>ExamConfiguration</code> object step by step. The configuration has many optional and
+        variable fields, such as duration, passing score, negative marking, question shuffle,
+        auto-submit, and calculator settings. The builder avoids constructor bloat and produces a
+        completed immutable configuration object through <code>build()</code>.
+    </p>
+
+    <h3>8.4 Inversion of Control via Question Sources: Part D</h3>
+    <p>
+        The sourcing requirement is followed because concrete question factories can accept a
+        <code>QuestionSource</code> object through dependency injection. This means the factory does
+        not need to know whether the data comes from a question bank, faker generator, or manual
+        source. The source is selected outside the factory and passed in, which keeps question origin
+        flexible and replaceable.
+    </p>
+
+    <h2>9. Open/Closed Principle Support</h2>
+    <p>
+        The design supports the Open/Closed Principle because new exam types, question families, and
+        question sources can be added mostly by creating new classes instead of modifying existing
+        core logic. For example, a new Certification Exam could be added using a new concrete exam
+        and factory. A Fill-in-the-Blank question could be added using a new question, renderer,
+        evaluator, and factory family. A new database-backed question source could be added by
+        implementing <code>QuestionSource</code>.
+    </p>
+</body>
+</html>
